@@ -1,3 +1,5 @@
-[submodule "tests/lib"]
-	path = tests/lib
-	url = git@github.com:jasonheecs/BashScriptTestingLibrary.git
+# https://www.git-scm.com/docs/gitmodules
+# Activar para realizar pruebas:
+# [submodule "tests/lib"]
+#	path = tests/lib
+#	url = git@github.com:jasonheecs/BashScriptTestingLibrary.git
