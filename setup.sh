@@ -45,16 +45,15 @@ function main() {
     setupUfw
 
     # (Deshabilitado) Si no existe la partición de intercambio, la configura:
-    if ! hasSwap; then
-        setupSwap
-    fi
+    #if ! hasSwap; then
+    #    setupSwap
+    #fi
 
     # Configura el huso horario:
     setupTimezone
 
     # https://es.wikipedia.org/wiki/Network_Time_Protocol
-    # Instala el protocolo de hora de red (NTP):
-    echo "Installing Network Time Protocol... " >&3
+    echo "Instala el protocolo de hora de red (NTP)... " >&3
     
     # Configura el NTP
     configureNTP
@@ -89,16 +88,16 @@ function logTimestamp() {
     local filename=${1}
     {
         echo "===================" 
-        echo "Log generated on $(date)"
+        echo "Registro de eventos creado el $(date --rfc-3339='ns')"
         echo "==================="
     } >>"${filename}" 2>&1
 }
 
 function setupTimezone() {
-    echo -ne "Enter the timezone for the server (Default is 'Asia/Singapore'):\n" >&3
+    echo -ne "Por favor introduzca el huso horario para este servidor (de manera predeterminada 'America/Caracas'):\n" >&3
     read -r timezone
     if [ -z "${timezone}" ]; then
-        timezone="Asia/Singapore"
+        timezone="America/Caracas"
     fi
     setTimezone "${timezone}"
     echo "Timezone is set to $(cat /etc/timezone)" >&3
