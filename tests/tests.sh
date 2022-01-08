@@ -3,8 +3,8 @@
 set -ex
 
 ####
-#   Loop through all the Vagrantfiles in the /Vagrant dir and run the unit tests (unit-tests.sh) against them
-#   Test results are stored in the /results dir
+#   Recorrer todos los archivos Vagrant en el directorio /Vagrant y ejecutar las pruebas unitarias (unit-tests.sh) contra ellos
+#   Los resultados de la pruebas son almacenados en la carpeta /results
 ###
 
 function getCurrentDir() {
