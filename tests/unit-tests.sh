@@ -116,7 +116,7 @@ function testNTP() {
     configureNTP
     ubuntu_version="$(lsb_release -sr)"
 
-    if [[ $ubuntu_version == '18.04' || $ubuntu_version == '20.04' ]]; then
+    if [[ $ubuntu_version == '18.04' || $ubuntu_version == '20.04' || $ubuntu_version == '21.10' ]]; then
         sleep 2
         assertContains "System clock synchronized: yes" "$(timedatectl status)"
     else
