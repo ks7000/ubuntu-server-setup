@@ -1,10 +1,12 @@
 #!/bin/bash
 
-# Add the new user account
-# Arguments:
-#   Account Username
-#   Flag to determine if user account is added silently. (With / Without GECOS prompt)
 function addUserAccount() {
+  # Agrega la nueva cuenta de usuario con derechos de administrador (acceso a sudo).
+  # Parámetros:
+  #   Nombre de usuario, variable: "username".
+  #   Modo silencioso, variable: "silent_mode" (Para introducir el nombre completo del usuario, use GECOS).
+  #     GECOS: https://www.cyberciti.biz/open-source/command-line-hacks/20-unix-command-line-tricks-part-i/
+  #       Respaldo histórico: https://web.archive.org/web/20220108145458/https://gourmist.beligifts.com/host-https-www.cyberciti.biz/open-source/command-line-hacks/20-unix-command-line-tricks-part-i/
     local username=${1}
     local silent_mode=${2}
 
@@ -18,11 +20,11 @@ function addUserAccount() {
     sudo passwd -d "${username}"
 }
 
-# Add the local machine public SSH Key for the new user account
-# Arguments:
-#   Account Username
-#   Public SSH Key
 function addSSHKey() {
+  # Agrega en la máquina local la llave pública del nuevo usuario.
+  # Parámetros:
+  #   Nombre de usuario, variable: "username".
+  #   Llave pública del usuario: "sshKey".
     local username=${1}
     local sshKey=${2}
 
@@ -31,38 +33,48 @@ function addSSHKey() {
     execAsUser "${username}" "chmod 600 ~/.ssh/authorized_keys"
 }
 
-# Execute a command as a certain user
-# Arguments:
-#   Account Username
-#   Command to be executed
 function execAsUser() {
+  # Ejecutar un comando con las credenciales de otro usuario.
+  # Parámetros:
+  #   Nombre de usuario, variable: "username".
+  #   Comando a ejecutar, variable: "exec_command"
     local username=${1}
     local exec_command=${2}
 
     sudo -u "${username}" -H bash -c "${exec_command}"
 }
 
-# Modify the sshd_config file
-# shellcheck disable=2116
 function changeSSHConfig() {
+  # Modifica el archivo de configuración "sshd_config".
+  #   Ayuda: https://www.man7.org/linux/man-pages/man5/sshd_config.5.html
+  # shellcheck disable=2116
     sudo sed -re 's/^(\#?)(PasswordAuthentication)([[:space:]]+)yes/\2\3no/' -i."$(echo 'old')" /etc/ssh/sshd_config
     sudo sed -re 's/^(\#?)(PermitRootLogin)([[:space:]]+)(.*)/PermitRootLogin no/' -i /etc/ssh/sshd_config
 }
 
-# Setup the Uncomplicated Firewall
 function setupUfw() {
-    sudo apt-get install ufw
+  # Configura el cortafuegos (UFW) para que permita conexiones SSH con OpenSSH.
+    
+    # Instala el cortafuegos.
+    sudo apt install ufw 
+    # Añada OpenSSH a la lista de permitidos (por hacer: configurar para un puerto distinto a 22)
     sudo ufw allow OpenSSH
-    yes y | sudo ufw enable
+    # Habilita UFW.
+    echo -e "¡Activación del cortafuegos UFW! \n"
+    if [[ ${silent_mode} == "true" ]]; then
+      yes y | sudo ufw enable
+    else
+      sudo ufw enable
+    fi
 }
 
-# Create the swap file based on amount of physical memory on machine (Maximum size of swap is 4GB)
 function createSwap() {
+  # Procede a crear la partición de intercambio de memoria (SWAP) a razón de 2 a 1 contra memoria de acceso aleatorio (RAM) instalada.
    local swapmem=$(($(getPhysicalMemory) * 2))
 
-   # Anything over 4GB in swap is probably unnecessary as a RAM fallback
-   if [ ${swapmem} -gt 4 ]; then
-        swapmem=4
+  #   Si la RAM excede de 8 gigabytes, instala solamente 4 GB en SWAP.
+   if [ ${swapmem} -gt 8 ]; then
+        swapmem=8
    fi
 
    sudo fallocate -l "${swapmem}G" /swapfile
@@ -71,55 +83,54 @@ function createSwap() {
    sudo swapon /swapfile
 }
 
-# Mount the swapfile
 function mountSwap() {
+  # Inicia el acceso a la partición de intercambio de memoria (SWAP), esto es llamado "montar la partición".
     sudo cp /etc/fstab /etc/fstab.bak
     echo '/swapfile none swap sw 0 0' | sudo tee -a /etc/fstab
 }
 
-# Modify the swapfile settings
-# Arguments:
-#   new vm.swappiness value
-#   new vm.vfs_cache_pressure value
 function tweakSwapSettings() {
+  # Modifica la configuración de la partición de intercambio de memoria (SWAP)
+    # Ayuda: https://linuxhint.com/understanding_vm_swappiness/
     local swappiness=${1}
+    # Ayuda: https://bbs.archlinux.org/viewtopic.php?id=184655
     local vfs_cache_pressure=${2}
 
     sudo sysctl vm.swappiness="${swappiness}"
     sudo sysctl vm.vfs_cache_pressure="${vfs_cache_pressure}"
 }
 
-# Save the modified swap settings
-# Arguments:
-#   new vm.swappiness value
-#   new vm.vfs_cache_pressure value
 function saveSwapSettings() {
+  # Modifica la configuración de la partición de intercambio de memoria (SWAP)
+  # Utiliza el comando "sysctl" de manra indirecta, modificando su fichero de configuración.
+    # Ayuda: https://linuxhint.com/understanding_vm_swappiness/
     local swappiness=${1}
+    # Ayuda: https://bbs.archlinux.org/viewtopic.php?id=184655
     local vfs_cache_pressure=${2}
 
     echo "vm.swappiness=${swappiness}" | sudo tee -a /etc/sysctl.conf
     echo "vm.vfs_cache_pressure=${vfs_cache_pressure}" | sudo tee -a /etc/sysctl.conf
 }
 
-# Set the machine's timezone
-# Arguments:
-#   tz data timezone
 function setTimezone() {
+  # Configura el huso horario del servidor.
+  # Parámetros:
+  # Huso horario, variable: "timezone".
     local timezone=${1}
     echo "${1}" | sudo tee /etc/timezone
     sudo ln -fs "/usr/share/zoneinfo/${timezone}" /etc/localtime # https://bugs.launchpad.net/ubuntu/+source/tzdata/+bug/1554806
     sudo dpkg-reconfigure -f noninteractive tzdata
 }
 
-# Configure Network Time Protocol
 function configureNTP() {
+  # Configura el protocolo de fecha y hora (NTP).
     ubuntu_version="$(lsb_release -sr)"
 
-    if [[ $ubuntu_version == '20.04' ]]; then
+    if [[ $ubuntu_version == '20.04' || $ubuntu_version == '21.10' ]]; then
         sudo systemctl restart systemd-timesyncd
     else
-        sudo apt-get update
-        sudo apt-get --assume-yes install ntp
+        sudo apt update
+        sudo apt --assume-yes install ntp
         
         # force NTP to sync
         sudo service ntp stop
@@ -128,8 +139,8 @@ function configureNTP() {
     fi
 }
 
-# Gets the amount of physical memory in GB (rounded up) installed on the machine
 function getPhysicalMemory() {
+  # Obtiene y muestra la memoria de acceso aleatorio (RAM) instalada en la máquina.
     local phymem
     phymem="$(free -g|awk '/^Mem:/{print $2}')"
     
@@ -144,14 +155,15 @@ function getPhysicalMemory() {
 # Arguments:
 #   Account username
 function disableSudoPassword() {
+  # Utilizar el comando "sudo" sin solicitud de contraseña (recuerde primero colocar acceso solamente con SSH).
     local username="${1}"
 
     sudo cp /etc/sudoers /etc/sudoers.bak
     sudo bash -c "echo '${1} ALL=(ALL) NOPASSWD: ALL' | (EDITOR='tee -a' visudo)"
 }
 
-# Reverts the original /etc/sudoers file before this script is ran
 function revertSudoers() {
+  # Restaura los cambios realizados por la función "disableSudoPassword()"
     sudo cp /etc/sudoers.bak /etc/sudoers
     sudo rm -rf /etc/sudoers.bak
 }
