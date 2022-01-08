@@ -1,49 +1,50 @@
-# Bash setup script for Ubuntu servers
-[![Build Status](https://travis-ci.org/jasonheecs/ubuntu-server-setup.svg?branch=master)](https://travis-ci.org/jasonheecs/ubuntu-server-setup)
+# Guion de configuración inicial para Servidores Ubuntu
 
-This is a setup script to automate the setup and provisioning of Ubuntu servers. It does the following:
-* Adds a new user account with sudo access
-* Adds a public ssh key for the new user account
-* Disables password authentication to the server
-* Deny root login to the server
-* Setup Uncomplicated Firewall
-* Create Swap file based on machine's installed memory
-* Setup the timezone for the server (Default to "Asia/Singapore")
-* Install Network Time Protocol
+(Clonado de https://github.com/jasonheecs/ubuntu-server-setup)
 
-# Installation
-SSH into your server and install git if it is not installed:
+Este es un guion de configuración para automatizar el inicio del aprovisionamiento de servidores Ubuntu. Hace lo siguiente
+* Adiciona un nuevo usuario con derechos de usuario `root` (**sudo**).
+* Agrega la _llave pública_ al nuevo usuario creado.
+* Inhabilita la autenticación por contraseña en el servidor.
+* Deniega el acceso directo como usuario **root** en el servidor.
+* Configura **Uncomplicated Firewall** (UFW).
+* (Característica deshabilitada en este repositorio) Crea un fichero de intercambio de memoria según el hardware instalado.
+* Configura el huso horario del servidor (por defecto `America/Caracas`).
+* Instala Network Time Protocol (NTP).
+
+# Instalación
+Debe tener Git instalado en el servidor y tener derecho a ejecutar `sudo`:
 ```bash
-sudo apt-get update
-sudo apt-get install git
+sudo apt update
+sudo apt install git
 ```
 
-Clone this repository into your home directory:
+Descargue una copia (*clonar*) este repositiorio a su directorio de inicio como usuario (`home`):
 ```bash
 cd ~
-git clone https://github.com/jasonheecs/ubuntu-server-setup.git
+git clone https://github.com/ks7000/ubuntu-server-setup.git
 ```
 
-Run the setup script
+Ejecute el guion de instalación:
 ```bash
 cd ubuntu-server-setup
 bash setup.sh
 ```
 
-# Setup prompts
-When the setup script is run, you will be prompted to enter the username of the new user account. 
+# Parámetros de configuración
+Al ejecutar el guion, será requerido el nombre del usuario para la nueva cuenta.
 
-Following that, you will then be prompted to add a public ssh key (which should be from your local machine) for the new account. To generate an ssh key from your local machine:
+Luego de eso, será solicitado el adicionar una nueva llave pública (la cual debería subir de su máquina local) para la nueva cuenta. Para generar una llave ssh en su máquina local, ejecute:
 ```bash
 ssh-keygen -t rsa
 cat ~/.ssh/id_rsa.pub
 ```
 
-Finally, you will be prompted to specify a [timezone](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones) for the server. It will be set to 'Asia/Singapore' if you do not specify a value.
+Finalmente solicitará el indicar un huso horario [timezone](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones) para el servidor. Si omite especificar una huso horario, será configurado automáticamente a `America/Caracas`.
 
-# Supported versions
-This setup script has been tested against Ubuntu 14.04, Ubuntu 16.04, Ubuntu 18.04 and Ubuntu 20.04.
+# Versiones probadas
+Ubuntu 14.04, Ubuntu 16.04, Ubuntu 18.04 y Ubuntu 20.04.
 
-# Running tests
-Tests are run against a set of Vagrant VMs. To run the tests, run the following in the project's directory:  
+# Ejecutando pruebas
+Las pruebas se realizan en un conjunto de máquinas virtuales con Vagrant. Para ello ejecute los ficheros en el siguiente directorio:
 `./tests/tests.sh`
