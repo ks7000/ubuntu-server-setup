@@ -46,5 +46,8 @@ Finalmente solicitará el indicar un huso horario [timezone](https://en.wikipedi
 Ubuntu 14.04, Ubuntu 16.04, Ubuntu 18.04 y Ubuntu 20.04.
 
 # Ejecutando pruebas
-Las pruebas se realizan en un conjunto de máquinas virtuales con Vagrant. Para ello ejecute los ficheros en el siguiente directorio:
+Las pruebas se realizan en un conjunto de máquinas virtuales con Vagrant. Recuerde primero activar los submódulos Git (`.gitmodules`).
+
+Para ello ejecute los ficheros en el siguiente directorio:
 `./tests/tests.sh`
+
