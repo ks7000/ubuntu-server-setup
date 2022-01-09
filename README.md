@@ -50,7 +50,7 @@ cat ~/.ssh/id_rsa.pub
 Finalmente solicitará el indicar un huso horario [timezone](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones) para el servidor. Si omite especificar una huso horario, será configurado automáticamente a `America/Caracas`.
 
 # Versiones probadas
-Ubuntu 14.04, Ubuntu 16.04, Ubuntu 18.04 y Ubuntu 20.04.
+Ubuntu 14.04, Ubuntu 16.04, Ubuntu 18.04, Ubuntu 20.04 y Ubuntu 21.10.
 
 # Ejecutando pruebas
 Las pruebas se realizan en un conjunto de máquinas virtuales con Vagrant. Recuerde primero activar los submódulos Git (`.gitmodules`).
