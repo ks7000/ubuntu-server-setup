@@ -13,7 +13,14 @@ Este es un guion de configuración para automatizar el inicio del aprovisionamie
 * Instala Network Time Protocol (NTP).
 
 # Instalación
-Debe tener Git instalado en el servidor y tener derecho a ejecutar `sudo`:
+Debe tener Git instalado en el servidor y tener derecho a ejecutar `sudo`.
+
+* Por medio de `curl`:
+```bash
+curl -Ls https://raw.githubusercontent.com/ks7000/ubuntu-server-setup/master/configura-servidor-ubuntu.sh | sh
+```
+
+* De manera tradicional:
 ```bash
 sudo apt update
 sudo apt install git
