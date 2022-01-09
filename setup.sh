@@ -42,7 +42,7 @@ function main() {
     changeSSHConfig
     
     # Configura el cortafuegos:
-    setupUfw
+    setupUfw true
 
     # (Deshabilitado) Si no existe la partición de intercambio, la configura:
     #if ! hasSwap; then
