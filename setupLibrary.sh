@@ -54,6 +54,7 @@ function changeSSHConfig() {
 
 function setupUfw() {
   # Configura el cortafuegos (UFW) para que permita conexiones SSH con OpenSSH.
+    local silent_mode=${1}
     
     # Instala el cortafuegos.
     sudo apt install ufw 
