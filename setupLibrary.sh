@@ -168,3 +168,11 @@ function revertSudoers() {
     sudo cp /etc/sudoers.bak /etc/sudoers
     sudo rm -rf /etc/sudoers.bak
 }
+function actualizar(){
+  # Actualizaciones de manera expedita
+  alias_act="alias actualizar='sudo -- sh -c "sudo apt update && sudo apt upgrade -y && sudo apt autoremove -y && cat /var/run/reboot-required"'"
+  execAsUser "${username}" "echo \"${alias_act}\" | sudo tee -a ~.bash_aliases" 
+}
+
+
+
