@@ -67,40 +67,4 @@ function main() {
     echo "¡Trabajo realizado! El archivo de registro está en ${output_file}" >&3
 }
 
-function setupSwap() {
-    createSwap
-    mountSwap
-    tweakSwapSettings "10" "50"
-    saveSwapSettings "10" "50"
-}
-
-function hasSwap() {
-    [[ "$(sudo swapon -s)" == *"/swapfile"* ]]
-}
-
-function cleanup() {
-    if [[ -f "/etc/sudoers.bak" ]]; then
-        revertSudoers
-    fi
-}
-
-function logTimestamp() {
-    local filename=${1}
-    {
-        echo "===================" 
-        echo "Registro de eventos creado el $(date --rfc-3339='ns')"
-        echo "==================="
-    } >>"${filename}" 2>&1
-}
-
-function setupTimezone() {
-    echo -ne "Por favor introduzca el huso horario para este servidor (de manera predeterminada 'America/Caracas'):\n" >&3
-    read -r timezone
-    if [ -z "${timezone}" ]; then
-        timezone="America/Caracas"
-    fi
-    setTimezone "${timezone}"
-    echo "Timezone is set to $(cat /etc/timezone)" >&3
-}
-
 main
