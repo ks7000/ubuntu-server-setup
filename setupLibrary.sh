@@ -7,13 +7,17 @@ function addUserAccount() {
   #   Modo silencioso, variable: "silent_mode" (Para introducir el nombre completo del usuario, use GECOS).
   #     GECOS: https://www.cyberciti.biz/open-source/command-line-hacks/20-unix-command-line-tricks-part-i/
   #       Respaldo histórico: https://web.archive.org/web/20220108145458/https://gourmist.beligifts.com/host-https-www.cyberciti.biz/open-source/command-line-hacks/20-unix-command-line-tricks-part-i/
+  
     local username=${1}
     local silent_mode=${2}
 
+    # Fuerza a que el usuario cambie su contraseña en su primer inicio de sesión (--expire).
+    # Fuerza a que el usuario solo se pueda conectar por clave SSH (--disable-password).
+    #   https://www.cyberciti.biz/faq/linux-set-change-password-how-to/
     if [[ ${silent_mode} == "true" ]]; then
-        sudo adduser --disabled-password --gecos '' "${username}"
+        sudo adduser --disabled-password --expire --gecos '' "${username}"
     else
-        sudo adduser --disabled-password "${username}"
+        sudo adduser --disabled-password --expire "${username}"
     fi
 
     sudo usermod -aG sudo "${username}"
