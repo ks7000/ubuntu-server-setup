@@ -212,6 +212,7 @@ function setupTimezone() {
 
 function instala_bat() {
   # Instala el comando bat, copia mejorada de cat. Use batcat una vez instalado.
+  #   https://www.cyberciti.biz/open-source/bat-linux-command-a-cat-clone-with-written-in-rust/
     ubuntu_version="$(lsb_release -sr)"
 
     if [[ $ubuntu_version == '20.04' || $ubuntu_version == '21.10' ]]; then
