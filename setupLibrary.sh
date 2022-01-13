@@ -156,9 +156,6 @@ function getPhysicalMemory() {
     fi
 }
 
-# Disables the sudo password prompt for a user account by editing /etc/sudoers
-# Arguments:
-#   Account username
 function disableSudoPassword() {
   # Utilizar el comando "sudo" sin solicitud de contraseña (recuerde primero colocar acceso solamente con SSH).
     local username="${1}"
