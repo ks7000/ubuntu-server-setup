@@ -22,6 +22,7 @@ function addUserAccount() {
     # Agrega el usuario al grupo de administradores.
     sudo usermod -aG sudo "${username}"
     # Fuerza a que el usuario cambie su contraseña en su primer inicio de sesión (--expire).
+    sudo passwd --delete "${username}"
     sudo passwd --expire "${username}"
 }
 
