@@ -57,6 +57,9 @@ function main() {
     
     # Configura el NTP
     configureNTP
+    
+    # Instala bat
+    instala_bat
 
     # Renicia el servicio SSH (¿Por qué?)
     sudo service ssh restart
