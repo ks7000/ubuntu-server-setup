@@ -11,17 +11,18 @@ function addUserAccount() {
     local username=${1}
     local silent_mode=${2}
 
-    # Fuerza a que el usuario cambie su contraseña en su primer inicio de sesión (--expire).
     # Fuerza a que el usuario solo se pueda conectar por clave SSH (--disable-password).
     #   https://www.cyberciti.biz/faq/linux-set-change-password-how-to/
     if [[ ${silent_mode} == "true" ]]; then
-        sudo adduser --disabled-password --expire --gecos '' "${username}"
+        sudo adduser --disabled-password --gecos '' "${username}"
     else
-        sudo adduser --disabled-password --expire "${username}"
+        sudo adduser --disabled-password "${username}"
     fi
 
+    # Agrega el usuario al grupo de administradores.
     sudo usermod -aG sudo "${username}"
-    sudo passwd -d "${username}"
+    # Fuerza a que el usuario cambie su contraseña en su primer inicio de sesión (--expire).
+    sudo passwd --expire "${username}"
 }
 
 function addSSHKey() {
