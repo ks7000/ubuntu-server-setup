@@ -134,7 +134,6 @@ function configureNTP() {
     if [[ $ubuntu_version == '20.04' || $ubuntu_version == '21.10' ]]; then
         sudo systemctl restart systemd-timesyncd
     else
-        sudo apt update
         sudo apt --assume-yes install ntp
         
         # force NTP to sync
@@ -142,6 +141,10 @@ function configureNTP() {
         sudo ntpd -gq
         sudo service ntp start
     fi
+}
+
+function actualizarRepo() {
+  sudo apt update
 }
 
 function getPhysicalMemory() {
