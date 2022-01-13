@@ -177,8 +177,7 @@ function revertSudoers() {
 function actualizar(){
   # Actualizaciones de manera expedita
   local username=${1}
-  alias_act="alias actualizar='sudo -- sh -c "sudo apt update && sudo apt upgrade -y && sudo apt autoremove -y && cat /var/run/reboot-required"'"
-  execAsUser "${username}" "echo \"${alias_act}\" | sudo tee -a ~.bash_aliases" 
+  execAsUser "${username}" "echo "alias actualizar='sudo -- sh -c \"sudo apt update && sudo apt upgrade -y && sudo apt autoremove -y && cat /var/run/reboot-required\"'" >> ~/.bash_aliases" 
 }
 
 function setupSwap() {
