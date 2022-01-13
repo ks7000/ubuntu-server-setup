@@ -55,6 +55,8 @@ function main() {
     # https://es.wikipedia.org/wiki/Network_Time_Protocol
     echo "Instala el protocolo de hora de red (NTP)... " >&3
     
+    # Actualiza los repositorios con apt.
+    actualizarRepo
     # Configura el NTP
     configureNTP
     
