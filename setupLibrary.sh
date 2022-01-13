@@ -209,3 +209,16 @@ function setupTimezone() {
     setTimezone "${timezone}"
     echo "Timezone is set to $(cat /etc/timezone)" >&3
 }
+
+function instala_bat() {
+  # Instala el comando bat, copia mejorada de cat. Use batcat una vez instalado.
+    ubuntu_version="$(lsb_release -sr)"
+
+    if [[ $ubuntu_version == '20.04' || $ubuntu_version == '21.10' ]]; then
+        sudo apt install bat
+        batcat -V
+    else
+        # Versión de Ubuntu no compatible.
+        exit 1
+    fi
+}
