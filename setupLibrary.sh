@@ -8,7 +8,9 @@ function addUserAccount() {
   #     GECOS: https://www.cyberciti.biz/open-source/command-line-hacks/20-unix-command-line-tricks-part-i/
   #       Respaldo histórico: https://web.archive.org/web/20220108145458/https://gourmist.beligifts.com/host-https-www.cyberciti.biz/open-source/command-line-hacks/20-unix-command-line-tricks-part-i/
   
-    local username=${1}
+    # Verifica si hay nombre de usuario establecido.
+    #   https://www.cyberciti.biz/faq/linux-unix-howto-check-if-bash-variable-defined-not/
+    local username="${1?:Excepción en \$var_name : nombre de usuario vacio. }"
     local silent_mode=${2}
 
     # Fuerza a que el usuario solo se pueda conectar por clave SSH (--disable-password).
