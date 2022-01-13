@@ -4,5 +4,5 @@ sudo apt install git
 
 cd ~
 git clone https://github.com/ks7000/ubuntu-server-setup.git
-cd ubuntu-server-setup
-bash setup.sh
+cd ~/ubuntu-server-setup
+bash ~/ubuntu-server-setup/setup.sh
