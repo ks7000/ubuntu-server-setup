@@ -27,7 +27,8 @@ function main() {
 
     # Agrega la cuenta:
         # Verifica si el usuario existe:
-        if [ getent passwd | cut -d: -f1 | grep "${username}" -eq "" ]; then
+        existe_u=$(getent passwd | cut -d: -f1 | grep "${username}")
+        if [ existe_u -eq "" ]; then
             addUserAccount "${username}"
         end if
     read -rp $'Por favor introduzca la LLAVE PÚBLICA para el nuevo usuario:\n' sshKey
