@@ -6,6 +6,7 @@
     sudo apt update
     sudo apt install git
     cd ~
+    rm -R ubuntu-server-setup/
     git clone https://github.com/ks7000/ubuntu-server-setup.git && cd ~/ubuntu-server-setup && sh ~/ubuntu-server-setup/setup.sh
   else
 	echo "Solo un usuario raíz puede agregar usuarios administradores."
