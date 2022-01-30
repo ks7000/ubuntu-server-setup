@@ -29,6 +29,7 @@ function main() {
     echo "Intentando agregar el usuario ${username}..."
         # Verifica si el usuario existe:
         existe_u=$(getent passwd | cut -d: -f1 | grep "${username}")
+        echo "Verificando usuario ${existe_u}"
         if [ "${existe_u}" = "${username}" ];
         then 
             addUserAccount "${username}"
