@@ -8,6 +8,7 @@ function addUserAccount() {
   #     GECOS: https://www.cyberciti.biz/open-source/command-line-hacks/20-unix-command-line-tricks-part-i/
   #       Respaldo histórico: https://web.archive.org/web/20220108145458/https://gourmist.beligifts.com/host-https-www.cyberciti.biz/open-source/command-line-hacks/20-unix-command-line-tricks-part-i/
   
+  echo "Intenta agregar usuario."
     # Verifica si hay nombre de usuario establecido.
     #   https://www.cyberciti.biz/faq/linux-unix-howto-check-if-bash-variable-defined-not/
     local username="${1?:Excepción en \$var_name : nombre de usuario vacio. }"
