@@ -26,8 +26,10 @@ function main() {
     trap cleanup EXIT SIGHUP SIGINT SIGTERM
 
     # Agrega la cuenta:
-    addUserAccount "${username}"
-
+        # Verifica si el usuario existe:
+        if [ getent passwd | cut -d: -f1 | grep "${username}" -eq "" ]; then
+            addUserAccount "${username}"
+        end if
     read -rp $'Por favor introduzca la LLAVE PÚBLICA para el nuevo usuario:\n' sshKey
     echo 'Inicio del trabajo...'
     logTimestamp "${output_file}"
