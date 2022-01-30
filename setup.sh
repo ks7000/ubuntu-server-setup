@@ -26,6 +26,7 @@ function main() {
     read -rp "Por favor introduzca el nombre de usuario para la nueva cuenta:" username
 
     # Agrega la cuenta:
+    echo "Intentando agregar el usuario ${username}..."
         # Verifica si el usuario existe:
         existe_u=$(getent passwd | cut -d: -f1 | grep "${username}")
         if [ "${existe_u}" = "${username}" ];
