@@ -210,9 +210,7 @@ function logTimestamp() {
 
 function setupTimezone() {
     echo -ne "Por favor introduzca el huso horario para este servidor (de manera predeterminada 'America/Caracas'):\n" >&3
-    # Espera 7 segundos si no introduce huso horario configura por defecto America/Caracas
-    #   https://www.cyberciti.biz/tips/linux-unix-pause-command.html
-    read -t 7 -r timezone
+    read -r timezone
     if [ -z "${timezone}" ]; then
         timezone="America/Caracas"
     fi
