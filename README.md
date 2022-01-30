@@ -17,7 +17,7 @@ Debe tener Git instalado en el servidor y tener derecho a ejecutar `sudo`.
 
 * Por medio de `curl`:
 ```bash
-curl -O https://raw.githubusercontent.com/ks7000/ubuntu-server-setup/master/configura-servidor-ubuntu.sh | sh configura-servidor-ubuntu.sh
+curl -O https://raw.githubusercontent.com/ks7000/ubuntu-server-setup/master/configura-servidor-ubuntu.sh && sh configura-servidor-ubuntu.sh
 ```
 
 * De manera tradicional:
