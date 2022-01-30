@@ -18,12 +18,12 @@ includeDependencies
 output_file="output.log"
 
 function main() {
-    # Utilidad principal de este proyecto.
-    read -rp "Por favor introduzca el nombre de usuario para la nueva cuenta:" username
-
     # El comando trap proporciona la herramienta para capturar una interrupción (señal) y luego limpiarla dentro del guion.
     # https://bash.cyberciti.biz/guide/How_to_clear_trap
     trap cleanup EXIT SIGHUP SIGINT SIGTERM
+
+    # Utilidad principal de este proyecto.
+    read -rp "Por favor introduzca el nombre de usuario para la nueva cuenta:" username
 
     # Agrega la cuenta:
         # Verifica si el usuario existe:
