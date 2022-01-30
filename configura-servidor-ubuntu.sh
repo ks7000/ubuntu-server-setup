@@ -4,7 +4,7 @@
 #   https://www.cyberciti.biz/tips/howto-write-shell-script-to-add-user.html
   if [ $(id -u) -eq 0 ]; then
     sudo apt update
-    sudo apt install git
+    sudo apt --assume-yes install git
     # Instala Powerline:
     #	https://colaboratorio.net/jimmy/terminal/2019/como-instalar-powerline-en-ubuntu/
     sudo apt install fonts-powerline powerline
