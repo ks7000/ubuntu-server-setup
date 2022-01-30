@@ -28,7 +28,7 @@ function main() {
     # Agrega la cuenta:
         # Verifica si el usuario existe:
         existe_u=$(getent passwd | cut -d: -f1 | grep "${username}")
-        if [ -z ${existe_u+x} ];
+        if [ "${existe_u}" = "${username}" ];
         then 
             addUserAccount "${username}"
         else
