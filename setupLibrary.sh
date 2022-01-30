@@ -56,7 +56,14 @@ function changeSSHConfig() {
   # Modifica el archivo de configuración "sshd_config".
   #   Ayuda: https://www.man7.org/linux/man-pages/man5/sshd_config.5.html
   # shellcheck disable=2116
-    sudo sed -re 's/^(\#?)(PasswordAuthentication)([[:space:]]+)yes/\2\3no/' -i."$(echo 'old')" /etc/ssh/sshd_config
+    sudo sed -re 's/^(\#?)(PasswordAuthentication)([[:space:]]+)
+    
+    
+    
+    
+    
+    
+    /\2\3no/' -i."$(echo 'old')" /etc/ssh/sshd_config
     sudo sed -re 's/^(\#?)(PermitRootLogin)([[:space:]]+)(.*)/PermitRootLogin no/' -i /etc/ssh/sshd_config
 }
 
@@ -230,4 +237,13 @@ function instala_bat() {
         # Versión de Ubuntu no compatible.
         exit 1
     fi
+}
+
+function Instala_Powerline() {
+    # Instala Powerline:
+    #	https://colaboratorio.net/jimmy/terminal/2019/como-instalar-powerline-en-ubuntu/
+    sudo apt --assume-yes install fonts-powerline powerline
+    orden="echo 'if [ -f /usr/share/powerline/bindings/bash/powerline.sh ]; then source /usr/share/powerline/bindings/bash/powerline.sh; fi' | sudo tee -a ~/.bashrc"
+    execAsUser "${username}" $orden
+
 }
