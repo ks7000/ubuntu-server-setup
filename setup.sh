@@ -32,9 +32,9 @@ function main() {
         echo "Verificando usuario ${existe_u}"
         if [ "${existe_u}" = "${username}" ];
         then 
-            addUserAccount "${username}"
-        else
             echo "El usuario ya existe."
+        else
+            addUserAccount "${username}"
         fi
     read -rp $'Por favor introduzca la LLAVE PÚBLICA para el nuevo usuario:\n' sshKey
     echo 'Inicio del trabajo...'
